@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Persona Creator</string>
+    <string name="mainFrameTitle">作成したペルソナ一覧</string>
+    <string name="createBtStr">新規ペルソナ作成</string>
+
+    <string name="mainBackBtStr">メイン画面へ戻る</string>
 </resources>
