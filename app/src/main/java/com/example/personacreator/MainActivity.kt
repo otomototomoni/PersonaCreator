@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         val newCreatePersonaButton = findViewById<Button>(R.id.createBt)
         //リスナを作成
         val listener = NewCreatePersona()
+        //メイン画面の新規ペルソナ作成ボタンにリスナを設定
         newCreatePersonaButton.setOnClickListener(listener)
 
     }

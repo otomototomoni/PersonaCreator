@@ -3,5 +3,11 @@
     <string name="mainFrameTitle">作成したペルソナ一覧</string>
     <string name="createBtStr">新規ペルソナ作成</string>
 
+    <string name="personaName">ペルソナの名前を入力してください</string>
+    <string name="personaAge">年齢</string>
+    <string name="personaGender">性別</string>
+    <string name="personaAffiliation">所属</string>
+    <string name="personaHeight">身長</string>
+    <string name="personaWeight">体重</string>
     <string name="mainBackBtStr">メイン画面へ戻る</string>
 </resources>
