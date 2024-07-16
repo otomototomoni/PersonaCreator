@@ -11,9 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class PersonaEditScreen : AppCompatActivity() {
-
-    private lateinit var inputContainer: LinearLayout
-    private lateinit var addButton: Button
+//地理的変数
+    private lateinit var inputContainerGeography: LinearLayout
+    private lateinit var addButtonGeography: Button
+//行動変数
+    private lateinit var inputContainerAction: LinearLayout
+    private lateinit var addButtonAction: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_persona_edit_screen)
@@ -24,10 +27,18 @@ class PersonaEditScreen : AppCompatActivity() {
         //mainBackBtにリスナを入れる。
         mainBackBt.setOnClickListener(backListener)
 
-        inputContainer = findViewById(R.id.input_container)
-        addButton = findViewById(R.id.add_button)
+        //地理的変数のedittext追加処理
+        inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
+        addButtonGeography = findViewById<Button>(R.id.add_button_geography)
 
-        addButton.setOnClickListener {
+        addButtonGeography.setOnClickListener {
+            addInputField()
+        }
+
+        //行動変数のEditText追加処理
+        inputContainerAction = findViewById<LinearLayout>(R.id.input_container_action)
+        addButtonAction = findViewById<Button>(R.id.add_button_action)
+        addButtonAction.setOnClickListener{
             addInputField()
         }
     }
@@ -48,6 +59,15 @@ class PersonaEditScreen : AppCompatActivity() {
             )
             hint = "New text"
         }
-        inputContainer.addView(newInputField)
+        val buttonClickListener = View.OnClickListener { view ->
+        when(view.id) {
+            R.id.add_button_geography -> {
+                inputContainerGeography.addView(newInputField)
+            }
+            R.id.add_button_action -> {
+                inputContainerAction.addView(newInputField)
+            }
+        }
+        }
     }
 }
