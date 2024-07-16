@@ -46,7 +46,7 @@ class PersonaEditScreen : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            hint = "Enter text"
+            hint = "New text"
         }
         inputContainer.addView(newInputField)
     }
