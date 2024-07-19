@@ -105,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </LinearLayout>
+
 <!--地理的変数　EditText追加欄-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -125,7 +126,7 @@
             android:text="@string/addEditBt" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
         <LinearLayout
             android:id="@+id/input_container_geography"
             android:layout_width="match_parent"
@@ -134,6 +135,7 @@
         </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
 <!--行動変数-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -154,7 +156,7 @@
             android:text="@string/addEditBt" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
             <LinearLayout
                 android:id="@+id/input_container_action"
                 android:layout_width="match_parent"
@@ -163,6 +165,7 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
     <!--人口動態変数-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -183,7 +186,7 @@
             android:text="@string/addEditBt" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
             <LinearLayout
                 android:id="@+id/input_container_population"
                 android:layout_width="match_parent"
@@ -192,6 +195,7 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
     <!--心理的変数-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -212,7 +216,7 @@
             android:text="@string/addEditBt" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
             <LinearLayout
                 android:id="@+id/input_container_psychology"
                 android:layout_width="match_parent"
