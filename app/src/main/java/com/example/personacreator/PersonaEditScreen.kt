@@ -11,12 +11,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class PersonaEditScreen : AppCompatActivity() {
-//地理的変数
+    //地理的変数
     private lateinit var inputContainerGeography: LinearLayout
     private lateinit var addButtonGeography: Button
-//行動変数
+    //行動変数
     private lateinit var inputContainerAction: LinearLayout
     private lateinit var addButtonAction: Button
+    //人口動態変数
+    private lateinit var inputContainerPopulation: LinearLayout
+    private lateinit var addButtonPopulation: Button
+    //心理的変数
+    private lateinit var inputContainerPsychology: LinearLayout
+    private lateinit var addButtonPsychology: Button
 
     //onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +46,18 @@ class PersonaEditScreen : AppCompatActivity() {
         addButtonAction = findViewById<Button>(R.id.add_button_action)
         addButtonAction.setOnClickListener{
             addInputField(inputContainerAction)
+        }//ボタンにリスナを追加
+        //人口動態変数のEditText追加処理
+        inputContainerPopulation = findViewById<LinearLayout>(R.id.input_container_population)
+        addButtonPopulation = findViewById<Button>(R.id.add_button_population)
+        addButtonPopulation.setOnClickListener{
+            addInputField(inputContainerPopulation)
+        }//ボタンにリスナを追加
+        //心理的変数のEditText追加処理
+        inputContainerPsychology = findViewById<LinearLayout>(R.id.input_container_psychology)
+        addButtonPsychology = findViewById<Button>(R.id.add_button_psychology)
+        addButtonPsychology.setOnClickListener{
+            addInputField(inputContainerPsychology)
         }//ボタンにリスナを追加
     }
 

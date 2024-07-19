@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </LinearLayout>
-
+<!--地理的変数　EditText追加欄-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -134,7 +134,7 @@
         </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
+<!--行動変数-->
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -163,5 +163,64 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+    <!--人口動態変数-->
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="20dp"
+            android:text="@string/Population"/>
+        <Button
+            android:id="@+id/add_button_population"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addEditBt" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/input_container_population"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <!--心理的変数-->
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="20dp"
+            android:text="@string/Psychology"/>
+        <Button
+            android:id="@+id/add_button_psychology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addEditBt" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/input_container_psychology"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <!--ここまで変数EditText-->
 </LinearLayout>
 </ScrollView>
