@@ -6,9 +6,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 
 class PersonaEditScreen : AppCompatActivity() {
     //地理的変数
@@ -23,6 +25,8 @@ class PersonaEditScreen : AppCompatActivity() {
     //心理的変数
     private lateinit var inputContainerPsychology: LinearLayout
     private lateinit var addButtonPsychology: Button
+    //viewModelを取得？
+    private val viewModel: PersonaEditViewModel by viewModels()
 
     //onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
