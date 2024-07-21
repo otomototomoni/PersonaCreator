@@ -1,10 +1,20 @@
 package com.example.personacreator
 
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.w3c.dom.Text
 
 class PersonaEditViewModel : ViewModel() {
+    // ペルソナの名前を保存する変数
+    val personaName : MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
+    //変数の初期化　textでいけないか？
+    init{
+        personaName.value = ""
+    }
     //地理的変数のText保存リストの生成？
     private val _geographyInputs = MutableLiveData<MutableList<String>>().apply { value = mutableListOf() }
     val geographyInputs: LiveData<MutableList<String>> = _geographyInputs
