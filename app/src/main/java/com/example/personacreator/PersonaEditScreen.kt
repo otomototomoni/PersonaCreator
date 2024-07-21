@@ -46,7 +46,10 @@ class PersonaEditScreen : AppCompatActivity() {
         val mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
         val backListener = MainBackListener()//リスナ変数を作成
         mainBackBt.setOnClickListener(backListener)//mainBackBtにリスナを入れる
-        
+
+        //viewmodelインスタンスを作成
+        val viewModel: PersonaEditViewModel = ViewModelProvider(this).get(PersonaEditViewModel::class.java)
+
         //地理的変数のedittext追加処理
         inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
         addButtonGeography = findViewById<Button>(R.id.add_button_geography)
@@ -73,52 +76,16 @@ class PersonaEditScreen : AppCompatActivity() {
             addInputField(inputContainerPsychology,viewModel.psycologyInputs)
         }//ボタンにリスナを追加
 
-        //-------------------------------------------
-        //viewmodelインスタンスを作成
-        val viewModel: PersonaEditViewModel = ViewModelProvider(this).get(PersonaEditViewModel::class.java)
-
-        // Observe changes in the geography inputs
-        viewModel.geographyInputs.observe(this, Observer { inputs ->
-            updateInputFields(inputContainerGeography, inputs) { index, text ->
-                viewModel.updateGeographyInput(index, text)
-            }
-        })
-
-        // Observe changes in the action inputs
-        viewModel.actionInputs.observe(this, Observer { inputs ->
-            updateInputFields(inputContainerAction, inputs) { index, text ->
-                viewModel.updateActionInput(index, text)
-            }
-        })
-
-        // Observe changes in the population inputs
-        viewModel.populationInputs.observe(this, Observer { inputs ->
-            updateInputFields(inputContainerPopulation, inputs) { index, text ->
-                viewModel.updatePopulationInput(index, text)
-            }
-        })
-
-        // Observe changes in the psychology inputs
-        viewModel.psycologyInputs.observe(this, Observer { inputs ->
-            updateInputFields(inputContainerPsychology, inputs) { index, text ->
-                viewModel.updatePsychologyInput(index, text)
-            }
-        })
-
         //---------------------------------------------------observer
         val EditTextObserver = Observer<TextView>{counter ->
             PersonaNameText =counter.toString()
         }
     }
 
-
-
-
-//------------------------------------------------戻るボタンを押したときの処理
+    //------------------------------------------------戻るボタンを押したときの処理
     private inner class MainBackListener : View.OnClickListener{
         //前の画面に戻る処理
         override fun onClick(v: View?) {
-            viewModel.personaName.value = PersonaNameText
             finish()
         }
 
@@ -139,23 +106,6 @@ class PersonaEditScreen : AppCompatActivity() {
             )
             hint = "New text"
             setText(text)
-        }
-    }
-    //----------------------------------------------------
-    private fun updateInputFields(container: LinearLayout, inputs: MutableList<String>, onTextChanged: (Int, String) -> Unit) {
-        container.removeAllViews()
-        inputs.forEachIndexed { index, input ->
-            val editText = createEditText(input)
-            editText.setText(input)
-            container.addView(editText)
-            editText.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    onTextChanged(index, s.toString())
-                }
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            })
         }
     }
 }

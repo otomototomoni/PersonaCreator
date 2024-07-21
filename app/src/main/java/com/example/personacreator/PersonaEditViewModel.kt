@@ -51,24 +51,4 @@ class PersonaEditViewModel : ViewModel() {
     }
 
     //-------------------------------------------------------------------変数への更新実行メソッド群↓↓↓
-    //地理的変数
-    fun updateGeographyInput(index: Int, input: String) {
-        _geographyInputs.value?.set(index, input)
-        _geographyInputs.value = _geographyInputs.value // Trigger observers
-    }
-    //行動変数
-    fun updateActionInput(index: Int, input: String) {
-        _actionInputs.value?.set(index, input)
-        _actionInputs.value = _actionInputs.value // Trigger observers
-    }
-    //人口動態変数
-    fun updatePopulationInput(index: Int, input: String) {
-        _populationInputs.value?.set(index, input)
-        _populationInputs.value = _populationInputs.value // Trigger observers
-    }
-    //心理的変数
-    fun updatePsychologyInput(index: Int, input: String) {
-        _psycologyInputs.value?.set(index, input)
-        _psycologyInputs.value = _psycologyInputs.value // Trigger observers
-    }
 }
