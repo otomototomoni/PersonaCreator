@@ -36,19 +36,22 @@ class PersonaEditScreen : AppCompatActivity() {
     //viewModelを取得？
     private val viewModel: PersonaEditViewModel by viewModels()
 
-    private var PersonaNameText = findViewById<TextView>(R.id.personaName).toString()
-
     //---------------------------------------------onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_persona_edit_screen)
 
+        var PersonaNameText = findViewById<TextView>(R.id.personaName).toString()
+
         val mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
-        val backListener = MainBackListener()//リスナ変数を作成
-        mainBackBt.setOnClickListener(backListener)//mainBackBtにリスナを入れる
+        //val backListener = MainBackListener()//リスナ変数を作成
+        //mainBackBt.setOnClickListener(backListener)//mainBackBtにリスナを入れる
+        mainBackBt.setOnClickListener{
+            MainActivityBack(PersonaNameText)
+        }
 
         //viewmodelインスタンスを作成
-        val viewModel: PersonaEditViewModel = ViewModelProvider(this).get(PersonaEditViewModel::class.java)
+        //val viewModel: PersonaEditViewModel = ViewModelProvider(this).get(PersonaEditViewModel::class.java)
 
         //地理的変数のedittext追加処理
         inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
@@ -78,17 +81,22 @@ class PersonaEditScreen : AppCompatActivity() {
 
         //---------------------------------------------------observer
         val EditTextObserver = Observer<TextView>{counter ->
-            PersonaNameText =counter.toString()
+            PersonaNameText = counter.toString()
         }
     }
 
     //------------------------------------------------戻るボタンを押したときの処理
-    private inner class MainBackListener : View.OnClickListener{
+    //private inner class MainBackListener : View.OnClickListener{
         //前の画面に戻る処理
-        override fun onClick(v: View?) {
-            finish()
-        }
+        //override fun onClick(v: View?) {
+            //viewModel.personaName.value = PersonaNameText.toString()
+            //finish()
+        //}
 
+    //}
+    private fun MainActivityBack(S:String){
+        viewModel.personaName.value = S
+        finish()
     }
 
     //----------------------------EditTextをそれぞれのLinearLayoutに入れるための処理
