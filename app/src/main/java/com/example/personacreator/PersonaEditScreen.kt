@@ -36,12 +36,17 @@ class PersonaEditScreen : AppCompatActivity() {
     private lateinit var mainBackBt : Button
     private lateinit var sharedPreferences : SharedPreferences//データを保存するやつ
 
+    //ペルソナのIdを取得する用の変数
     private lateinit var PersonaNameSP : EditText//ペルソナの名前を取得するところ
     private lateinit var PersonaAgeSP : EditText//年齢
     private lateinit var PersonaGenderSP : EditText//性別
     private lateinit var PersonaHeightSP : EditText//身長
     private lateinit var PersonaWeightSP : EditText//体重
     private lateinit var PersonaAffiliationSP : EditText//所属
+
+    //addEditTextで追加されたテキストを保存する用の MutableListOf（）
+    private var geographyAddNum = 0//EditTextが追加されるたびにこの数値を増やしていき、再度この画面に戻ってきたときはこの数値ぶん地理的変数のEditTextを増やす。
+    private val addEditTextGeography = mutableListOf<EditText>()//EditTextが追加されたときにこのlistに追加していく。
 
     //---------------------------------------------onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,10 +85,13 @@ class PersonaEditScreen : AppCompatActivity() {
         }
 
         //---------------------------------ボタンを押したらEditTextが追加される処理の準備　メソッドの挿入
+        geographyAddNum = sharedPreferences.getInt("geographyAddNum",0)//sharedPreferencesの値を代入。空の場合は0を入れる。
+
         //地理的変数のedittext追加処理
         inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
         addButtonGeography = findViewById<Button>(R.id.add_button_geography)
         addButtonGeography.setOnClickListener {
+            geographyAddNum++//数値を増やし、EditTextを追加した回数をカウント  最初はaddInputFieldメソッドの中に入れていたが、起動するごとに数が増えるといった不具合が出たのでこちらに入れた。
             addInputField(inputContainerGeography)
         }//ボタンにリスナを追加
         //行動変数のEditText追加処理
@@ -104,6 +112,14 @@ class PersonaEditScreen : AppCompatActivity() {
         addButtonPsychology.setOnClickListener {
             addInputField(inputContainerPsychology)
         }//ボタンにリスナを追加
+
+        //-----------------------------今までに追加されたEditTextを追加する処理。
+        if(geographyAddNum != 0){
+            for(i in 1..geographyAddNum){
+                addInputField(inputContainerGeography)
+            }
+        }
+
     }
 
     //------------------------------------------------外部メソッド集合群
@@ -117,15 +133,18 @@ class PersonaEditScreen : AppCompatActivity() {
             editor.putString("PersonaHeight",PersonaHeightSP.text.toString())
             editor.putString("PersonaWeight",PersonaWeightSP.text.toString())
             editor.putString("PersonaAffiliation",PersonaAffiliationSP.text.toString())
+
+            editor.putInt("geographyAddNum",geographyAddNum)//最終的に追加したEditText数を取得：地理的変数
         editor.apply()
-        //前の画面に戻る
-        finish()
+
+        finish()//前の画面に戻る
     }
 
     //----------------------------EditTextをそれぞれのLinearLayoutに入れるための処理
     private fun addInputField(container: LinearLayout) {
-        val editText = createEditText("これが新しいText")
-        container.addView(editText)
+        val editText = createEditText("" )
+        container.addView(editText)//LinearLayoutにEditTextを追加
+        addEditTextGeography.add(editText)//mutableListOfにEditTextを追加
     }
 
     //-----------------------------------------追加するEditTextの中身の設定
