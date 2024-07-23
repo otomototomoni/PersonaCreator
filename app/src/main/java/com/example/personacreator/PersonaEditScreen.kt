@@ -1,5 +1,7 @@
 package com.example.personacreator
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -36,14 +38,25 @@ class PersonaEditScreen : AppCompatActivity() {
     //viewModelを取得？
     private val viewModel: PersonaEditViewModel by viewModels()
 
+    //MainBackBtの取得する用の変数
+    private lateinit var mainBackBt : Button
+    private lateinit var sharedPreferences : SharedPreferences//データベースのようなもの
+    private lateinit var PersonaNameSP : EditText//ペルソナの名前を取得するところ
+
     //---------------------------------------------onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_persona_edit_screen)
 
         var PersonaNameText = findViewById<TextView>(R.id.personaName).toString()
+        PersonaNameSP = findViewById<EditText>(R.id.personaName)
+        //ペルソナ情報を取得するところ
+        sharedPreferences = getSharedPreferences("PersonaInformation", Context.MODE_PRIVATE)
+        val savedText = sharedPreferences.getString("PersonaName","")
+        //ペルソナの名前が入っている欄にもう一度入れる。
+        PersonaNameSP.setText(savedText)
 
-        val mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
+        mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
         //val backListener = MainBackListener()//リスナ変数を作成
         //mainBackBt.setOnClickListener(backListener)//mainBackBtにリスナを入れる
         mainBackBt.setOnClickListener{
@@ -93,9 +106,16 @@ class PersonaEditScreen : AppCompatActivity() {
             //finish()
         //}
 
-    //}
+    //
+    // }
     private fun MainActivityBack(S:String){
         viewModel.personaName.value = S
+        //ペルソナの名前を保存する
+        val text = PersonaNameSP.text.toString()
+        val editor = sharedPreferences.edit()
+        editor.putString("PersonaName", text)
+        editor.apply()
+        //前の画面に戻る
         finish()
     }
 
