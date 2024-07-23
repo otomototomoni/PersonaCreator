@@ -35,7 +35,13 @@ class PersonaEditScreen : AppCompatActivity() {
     //MainBackBtの取得する用の変数
     private lateinit var mainBackBt : Button
     private lateinit var sharedPreferences : SharedPreferences//データを保存するやつ
+
     private lateinit var PersonaNameSP : EditText//ペルソナの名前を取得するところ
+    private lateinit var PersonaAgeSP : EditText//年齢
+    private lateinit var PersonaGenderSP : EditText//性別
+    private lateinit var PersonaHeightSP : EditText//身長
+    private lateinit var PersonaWeightSP : EditText//体重
+    private lateinit var PersonaAffiliationSP : EditText//所属
 
     //---------------------------------------------onCreate メイン処理
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +50,36 @@ class PersonaEditScreen : AppCompatActivity() {
 
         //------------------------------------------------------ペルソナで入力のあった情報を取り出して挿入する。
         PersonaNameSP = findViewById<EditText>(R.id.personaName)//ペルソナの名前のIDを取得
-        sharedPreferences = getSharedPreferences("PersonaInformation", Context.MODE_PRIVATE)//ペルソナ情報を取得するファイルを作成？
-        val savedText = sharedPreferences.getString("PersonaName", "")
-        PersonaNameSP.setText(savedText)//ペルソナの名前が入っている欄にもう一度入れる。
+        PersonaAgeSP = findViewById<EditText>(R.id.personaAge)
+        PersonaGenderSP = findViewById<EditText>(R.id.personaGender)
+        PersonaHeightSP = findViewById<EditText>(R.id.personaHeight)
+        PersonaWeightSP = findViewById<EditText>(R.id.personaWeight)
+        PersonaAffiliationSP = findViewById<EditText>(R.id.personaAffiliation)
 
+        //--------------------------------それぞれの情報をEditTedtに入れている
+        sharedPreferences = getSharedPreferences("PersonaInformation", Context.MODE_PRIVATE)//ペルソナ情報を取得するファイルを作成？
+
+        var savedText = sharedPreferences.getString("PersonaName", "")//名前
+        PersonaNameSP.setText(savedText)//ペルソナの名前が入っている欄にもう一度入れる。
+        savedText = sharedPreferences.getString("PersonaAge", "")//年齢
+        PersonaAgeSP.setText(savedText)
+        savedText = sharedPreferences.getString("PersonaGender", "")//性別
+        PersonaGenderSP.setText(savedText)
+        savedText = sharedPreferences.getString("PersonaHeight", "")//身長
+        PersonaHeightSP.setText(savedText)
+        savedText = sharedPreferences.getString("PersonaWeight", "")//体重
+        PersonaWeightSP.setText(savedText)
+        savedText = sharedPreferences.getString("PersonaAffiliation", "")//所属
+        PersonaAffiliationSP.setText(savedText)
+
+        //--------------------------------メイン画面に戻るための処理の準備　メソッドを入れているところ。
         mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
         //mainBackBtにリスナを入れる
         mainBackBt.setOnClickListener {
             MainActivityBack()
         }
 
+        //---------------------------------ボタンを押したらEditTextが追加される処理の準備　メソッドの挿入
         //地理的変数のedittext追加処理
         inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
         addButtonGeography = findViewById<Button>(R.id.add_button_geography)
@@ -80,13 +106,17 @@ class PersonaEditScreen : AppCompatActivity() {
         }//ボタンにリスナを追加
     }
 
+    //------------------------------------------------外部メソッド集合群
     //------------------------------------------------戻るボタンを押したときの処理
-
     private fun MainActivityBack(){
-        //ペルソナの名前を保存する
-        val text = PersonaNameSP.text.toString()
+        //ペルソナの基本情報を保存する
         val editor = sharedPreferences.edit()
-        editor.putString("PersonaName", text)
+            editor.putString("PersonaName",PersonaNameSP.text.toString())
+            editor.putString("PersonaAge",PersonaAgeSP.text.toString())
+            editor.putString("PersonaGender",PersonaGenderSP.text.toString())
+            editor.putString("PersonaHeight",PersonaHeightSP.text.toString())
+            editor.putString("PersonaWeight",PersonaWeightSP.text.toString())
+            editor.putString("PersonaAffiliation",PersonaAffiliationSP.text.toString())
         editor.apply()
         //前の画面に戻る
         finish()
@@ -94,7 +124,7 @@ class PersonaEditScreen : AppCompatActivity() {
 
     //----------------------------EditTextをそれぞれのLinearLayoutに入れるための処理
     private fun addInputField(container: LinearLayout) {
-        val editText = createEditText("")
+        val editText = createEditText("これが新しいText")
         container.addView(editText)
     }
 
