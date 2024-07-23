@@ -126,7 +126,7 @@ class PersonaEditScreen : AppCompatActivity() {
     //------------------------------------------------戻るボタンを押したときの処理
     private fun MainActivityBack(){
         //ペルソナの基本情報を保存する
-        val editor = sharedPreferences.edit()
+        var editor = sharedPreferences.edit()
             editor.putString("PersonaName",PersonaNameSP.text.toString())
             editor.putString("PersonaAge",PersonaAgeSP.text.toString())
             editor.putString("PersonaGender",PersonaGenderSP.text.toString())
