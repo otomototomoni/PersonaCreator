@@ -15,15 +15,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import java.lang.reflect.Array.set
 
 //---------------------------------------private変数の宣言↓↓↓
 class PersonaEditScreen : AppCompatActivity() {
-    //地理的変数
+    //地理的変数のLinearLayoutとBUttonを取得する変数
     private lateinit var inputContainerGeography: LinearLayout
     private lateinit var addButtonGeography: Button
     //行動変数
@@ -35,12 +31,10 @@ class PersonaEditScreen : AppCompatActivity() {
     //心理的変数
     private lateinit var inputContainerPsychology: LinearLayout
     private lateinit var addButtonPsychology: Button
-    //viewModelを取得？
-    private val viewModel: PersonaEditViewModel by viewModels()
 
     //MainBackBtの取得する用の変数
     private lateinit var mainBackBt : Button
-    private lateinit var sharedPreferences : SharedPreferences//データベースのようなもの
+    private lateinit var sharedPreferences : SharedPreferences//データを保存するやつ
     private lateinit var PersonaNameSP : EditText//ペルソナの名前を取得するところ
 
     //---------------------------------------------onCreate メイン処理
@@ -48,68 +42,47 @@ class PersonaEditScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_persona_edit_screen)
 
-        var PersonaNameText = findViewById<TextView>(R.id.personaName).toString()
-        PersonaNameSP = findViewById<EditText>(R.id.personaName)
-        //ペルソナ情報を取得するところ
-        sharedPreferences = getSharedPreferences("PersonaInformation", Context.MODE_PRIVATE)
-        val savedText = sharedPreferences.getString("PersonaName","")
-        //ペルソナの名前が入っている欄にもう一度入れる。
-        PersonaNameSP.setText(savedText)
+        //------------------------------------------------------ペルソナで入力のあった情報を取り出して挿入する。
+        PersonaNameSP = findViewById<EditText>(R.id.personaName)//ペルソナの名前のIDを取得
+        sharedPreferences = getSharedPreferences("PersonaInformation", Context.MODE_PRIVATE)//ペルソナ情報を取得するファイルを作成？
+        val savedText = sharedPreferences.getString("PersonaName", "")
+        PersonaNameSP.setText(savedText)//ペルソナの名前が入っている欄にもう一度入れる。
 
         mainBackBt = findViewById<Button>(R.id.mainBackBt)//メイン画面へ戻るボタンを取得
-        //val backListener = MainBackListener()//リスナ変数を作成
-        //mainBackBt.setOnClickListener(backListener)//mainBackBtにリスナを入れる
-        mainBackBt.setOnClickListener{
-            MainActivityBack(PersonaNameText)
+        //mainBackBtにリスナを入れる
+        mainBackBt.setOnClickListener {
+            MainActivityBack()
         }
-
-        //viewmodelインスタンスを作成
-        //val viewModel: PersonaEditViewModel = ViewModelProvider(this).get(PersonaEditViewModel::class.java)
 
         //地理的変数のedittext追加処理
         inputContainerGeography = findViewById<LinearLayout>(R.id.input_container_geography)
         addButtonGeography = findViewById<Button>(R.id.add_button_geography)
-        addButtonGeography.setOnClickListener{
-            addInputField(inputContainerGeography,viewModel.geographyInputs)
-            viewModel.addGeographyInput("")
+        addButtonGeography.setOnClickListener {
+            addInputField(inputContainerGeography)
         }//ボタンにリスナを追加
         //行動変数のEditText追加処理
         inputContainerAction = findViewById<LinearLayout>(R.id.input_container_action)
         addButtonAction = findViewById<Button>(R.id.add_button_action)
-        addButtonAction.setOnClickListener{
-            addInputField(inputContainerAction,viewModel.actionInputs)
+        addButtonAction.setOnClickListener {
+            addInputField(inputContainerAction)
         }//ボタンにリスナを追加
         //人口動態変数のEditText追加処理
         inputContainerPopulation = findViewById<LinearLayout>(R.id.input_container_population)
         addButtonPopulation = findViewById<Button>(R.id.add_button_population)
-        addButtonPopulation.setOnClickListener{
-            addInputField(inputContainerPopulation,viewModel.populationInputs)
+        addButtonPopulation.setOnClickListener {
+            addInputField(inputContainerPopulation)
         }//ボタンにリスナを追加
         //心理的変数のEditText追加処理
         inputContainerPsychology = findViewById<LinearLayout>(R.id.input_container_psychology)
         addButtonPsychology = findViewById<Button>(R.id.add_button_psychology)
-        addButtonPsychology.setOnClickListener{
-            addInputField(inputContainerPsychology,viewModel.psycologyInputs)
+        addButtonPsychology.setOnClickListener {
+            addInputField(inputContainerPsychology)
         }//ボタンにリスナを追加
-
-        //---------------------------------------------------observer
-        val EditTextObserver = Observer<TextView>{counter ->
-            PersonaNameText = counter.toString()
-        }
     }
 
     //------------------------------------------------戻るボタンを押したときの処理
-    //private inner class MainBackListener : View.OnClickListener{
-        //前の画面に戻る処理
-        //override fun onClick(v: View?) {
-            //viewModel.personaName.value = PersonaNameText.toString()
-            //finish()
-        //}
 
-    //
-    // }
-    private fun MainActivityBack(S:String){
-        viewModel.personaName.value = S
+    private fun MainActivityBack(){
         //ペルソナの名前を保存する
         val text = PersonaNameSP.text.toString()
         val editor = sharedPreferences.edit()
@@ -120,7 +93,7 @@ class PersonaEditScreen : AppCompatActivity() {
     }
 
     //----------------------------EditTextをそれぞれのLinearLayoutに入れるための処理
-    private fun addInputField(container: LinearLayout, inputs: LiveData<MutableList<String>>) {
+    private fun addInputField(container: LinearLayout) {
         val editText = createEditText("")
         container.addView(editText)
     }
