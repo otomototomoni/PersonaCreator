@@ -92,31 +92,31 @@ class PersonaEditScreen : AppCompatActivity() {
         addButtonGeography = findViewById<Button>(R.id.add_button_geography)
         addButtonGeography.setOnClickListener {
             geographyAddNum++//数値を増やし、EditTextを追加した回数をカウント  最初はaddInputFieldメソッドの中に入れていたが、起動するごとに数が増えるといった不具合が出たのでこちらに入れた。
-            addInputField(inputContainerGeography)
+            addInputField(inputContainerGeography,"")
         }//ボタンにリスナを追加
         //行動変数のEditText追加処理
         inputContainerAction = findViewById<LinearLayout>(R.id.input_container_action)
         addButtonAction = findViewById<Button>(R.id.add_button_action)
         addButtonAction.setOnClickListener {
-            addInputField(inputContainerAction)
+            addInputField(inputContainerAction,"")
         }//ボタンにリスナを追加
         //人口動態変数のEditText追加処理
         inputContainerPopulation = findViewById<LinearLayout>(R.id.input_container_population)
         addButtonPopulation = findViewById<Button>(R.id.add_button_population)
         addButtonPopulation.setOnClickListener {
-            addInputField(inputContainerPopulation)
+            addInputField(inputContainerPopulation,"")
         }//ボタンにリスナを追加
         //心理的変数のEditText追加処理
         inputContainerPsychology = findViewById<LinearLayout>(R.id.input_container_psychology)
         addButtonPsychology = findViewById<Button>(R.id.add_button_psychology)
         addButtonPsychology.setOnClickListener {
-            addInputField(inputContainerPsychology)
+            addInputField(inputContainerPsychology,"")
         }//ボタンにリスナを追加
 
         //-----------------------------今までに追加されたEditTextを追加する処理。
         if(geographyAddNum != 0){
             for(i in 1..geographyAddNum){
-                addInputField(inputContainerGeography)
+                addInputField(inputContainerGeography,sharedPreferences.getString("GeographyList${i}","").toString()?:"")
             }
         }
 
@@ -127,22 +127,29 @@ class PersonaEditScreen : AppCompatActivity() {
     private fun MainActivityBack(){
         //ペルソナの基本情報を保存する
         var editor = sharedPreferences.edit()
-            editor.putString("PersonaName",PersonaNameSP.text.toString())
-            editor.putString("PersonaAge",PersonaAgeSP.text.toString())
-            editor.putString("PersonaGender",PersonaGenderSP.text.toString())
-            editor.putString("PersonaHeight",PersonaHeightSP.text.toString())
-            editor.putString("PersonaWeight",PersonaWeightSP.text.toString())
-            editor.putString("PersonaAffiliation",PersonaAffiliationSP.text.toString())
+            editor.putString("PersonaName",PersonaNameSP.text.toString()?:"")
+            editor.putString("PersonaAge",PersonaAgeSP.text.toString()?:"")
+            editor.putString("PersonaGender",PersonaGenderSP.text.toString()?:"")
+            editor.putString("PersonaHeight",PersonaHeightSP.text.toString()?:"")
+            editor.putString("PersonaWeight",PersonaWeightSP.text.toString()?:"")
+            editor.putString("PersonaAffiliation",PersonaAffiliationSP.text.toString()?:"")
+
 
             editor.putInt("geographyAddNum",geographyAddNum)//最終的に追加したEditText数を取得：地理的変数
+        //地理的変数に追加したEditTextのなかみのTextをsharedpreferencesに入れて保存
+        if(geographyAddNum != 0){
+            for(i in 1..geographyAddNum){
+                editor.putString("GeographyList${i}",addEditTextGeography[i-1].text.toString()?:"")
+            }
+        }
         editor.apply()
 
         finish()//前の画面に戻る
     }
 
     //----------------------------EditTextをそれぞれのLinearLayoutに入れるための処理
-    private fun addInputField(container: LinearLayout) {
-        val editText = createEditText("" )
+    private fun addInputField(container: LinearLayout,Text:String) {
+        val editText = createEditText( Text )
         container.addView(editText)//LinearLayoutにEditTextを追加
         addEditTextGeography.add(editText)//mutableListOfにEditTextを追加
     }
